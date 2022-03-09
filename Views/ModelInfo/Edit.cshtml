@@ -1,0 +1,88 @@
+﻿@using Bikemvc.ViewModel
+@model ModelInfoViewModel
+@using Bikemvc.Models
+
+
+@Html.ValidationSummary(true)
+@{ BikeDbContext db = new BikeDbContext();}
+
+@using (Ajax.BeginForm("Edit", null, new AjaxOptions
+{
+    UpdateTargetId = "",
+    OnSuccess = "success",
+    OnFailure = "failure",
+    HttpMethod = "Post"
+}, new { enctype = "multipart/form-data" }))
+{
+    @Html.HiddenFor(u => u.ModelInfoWorkEntity.ModelInfoId)
+    <br />
+    <div class="form-control" style="background-color:cornsilk">
+        <div style="font-family:Arial;font-weight:bolder">
+
+            @Html.LabelFor(u => u.ModelInfoWorkEntity.ModelName)
+
+            @Html.TextBox("ModelInfoWorkEntity.ModelName", Model.ModelInfoWorkEntity.ModelName)
+
+
+            @Html.ValidationMessageFor(u => u.ModelInfoWorkEntity.ModelName)
+
+            <br />
+        </div>
+        <br />
+        <div style="font-family:Arial;font-weight:bolder">
+            @Html.LabelFor(u => u.ModelInfoWorkEntity.IsAvailable)
+            @Html.CheckBoxFor(u => u.ModelInfoWorkEntity.IsAvailable)
+            @Html.ValidationMessageFor(u => u.ModelInfoWorkEntity.IsAvailable)
+            <br />
+        </div>
+        <br />
+        <div style="font-family:Arial;font-weight:bolder">
+            @Html.LabelFor(u => u.ModelInfoWorkEntity.ReleaseDate)
+            <input id="id_data" type="date" name="ModelInfoWorkEntity.ReleaseDate" />
+            @Html.ValidationMessageFor(u => u.ModelInfoWorkEntity.ReleaseDate)
+            <br />
+        </div>
+        <br />
+        <div style="font-family:Arial;font-weight:bolder">
+            @Html.LabelFor(u => u.ModelInfoWorkEntity.ModelPrice)
+            @Html.TextBox("ModelInfoWorkEntity.ModelPrice", Model.ModelInfoWorkEntity.ModelPrice)
+            @Html.ValidationMessageFor(u => u.ModelInfoWorkEntity.ModelPrice)
+            <br />
+        </div>
+        <br />
+
+        <div style="font-family:Arial;font-weight:bolder">
+            <span>Photo : </span>
+            <input type="file" name="ModelInfoWorkEntity.PicturePFB" />
+        </div>
+        <br />
+        <div style="font-family:Arial;font-weight:bolder">
+            @Html.LabelFor(u => u.ModelInfoWorkEntity.BikeInfoId)
+
+
+            @Html.DropDownList("ModelInfoWorkEntity.BikeInfoId", new SelectList(db.BikeInfos.ToList(), "BikeInfoId", "BikeName"))
+
+            <br />
+        </div>
+        <div style="font-family:Arial;font-weight:bolder">
+            <input type="submit" value="Edit" class="btn-danger" />
+        </div>
+    </div>
+}
+
+
+<script>
+
+    function success(data) {
+
+        alert('Success');
+
+    }
+
+    function failure(data) {
+
+        alert('Failure');
+
+    }
+
+</script>

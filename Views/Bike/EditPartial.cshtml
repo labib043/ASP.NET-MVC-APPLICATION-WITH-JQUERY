@@ -1,0 +1,15 @@
+﻿@using Bikemvc.Models
+@model BikeInfo
+
+@using (Html.BeginForm("Edit", "Bike"))
+{
+    @Html.Hidden("BikeInfoId", Model.BikeInfoId)
+    <div class="form-control">
+        <div style="font-weight:bolder">BikeName</div>
+        @Html.TextBox("BikeName")
+        <br />
+
+        <input type="submit" value="Edit" class="btn btn-success" style="margin-top:1%" />
+    </div>
+
+}

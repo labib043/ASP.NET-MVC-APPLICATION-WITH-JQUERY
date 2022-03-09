@@ -1,0 +1,116 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+@using Bikemvc.ViewModel
+
+@model ModelInfoViewModel
+
+
+<table class="table table-bordered table-primary" >
+    <thead>
+        <tr>
+            <th>
+                ModelInfoId
+            </th>
+            <th>
+                ModelName
+            </th>
+            <th>
+                IsAvailable
+            </th>
+            <th>
+                ReleaseDate
+            </th>
+            <th>
+                ModelPrice
+            </th>
+            <th>
+                BikeId
+            </th>
+            <th>
+                Image
+            </th>
+            <th>
+                Delete
+            </th>
+            <th>
+                Edit
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @{
+            if (Model.ModelInfoes != null)
+            {
+
+                foreach (var tempModelInfo in Model.ModelInfoes)
+                {
+
+                    <tr>
+                        <td>
+                            @tempModelInfo.ModelInfoId
+                        </td>
+                        <td>
+                            @tempModelInfo.ModelName
+                        </td>
+                        <td>
+                            @tempModelInfo.IsAvailable
+                        </td>
+                        <td>
+                            @tempModelInfo.ReleaseDate
+                        </td>
+                        <td>
+                            @tempModelInfo.ModelPrice
+                        </td>
+                        <td>
+                            @tempModelInfo.BikeInfoId
+                        </td>
+                        <td>
+                            <img src="~/@tempModelInfo.Image" width="50" height="50" />
+                        </td>
+                        <td>
+                            @Html.ActionLink("Delete", "Delete", new { ModelInfoid = @tempModelInfo.ModelInfoId }, null)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Edit", "Edit", new { ModelInfoid = @tempModelInfo.ModelInfoId }, null)
+                        </td>
+                    </tr>
+
+
+
+                }
+
+            }
+        }
+    </tbody>
+
+
+</table>
+<br />
+<br />
+<div >
+    <button class="btn-danger">
+        @Html.ActionLink("Insert", "Insert", new { })
+    </button>
+</div>
+
+@{
+    if (HttpContext.Current.Session["ActionToken"] != null)
+    {
+        if ((ActionMode)HttpContext.Current.Session["ActionToken"] == ActionMode.Insert)
+        {
+            Html.RenderPartial("Insert", Model);
+            HttpContext.Current.Session["ActionToken"] = null;
+            HttpContext.Current.Session["ModelInfoId"] = null;
+        }
+        else if ((ActionMode)HttpContext.Current.Session["ActionToken"] == ActionMode.Edit)
+        {
+            Html.RenderPartial("Edit", Model);
+            HttpContext.Current.Session["ActionToken"] = null;
+            HttpContext.Current.Session["ModelInfoId"] = null;
+        }
+    }
+}

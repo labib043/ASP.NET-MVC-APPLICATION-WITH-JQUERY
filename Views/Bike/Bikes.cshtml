@@ -1,0 +1,40 @@
+﻿@using Bikemvc.Models
+@model IList<BikeInfo>
+
+<table class="table table-bordered table-warning">
+    <thead class="table table-success">
+        <tr>
+            <th>BikeInfoId</th>
+            <th>BikeName</th>
+            <th>Delete</th>
+            <th>Edit</th>
+        </tr>
+        </thead>
+        @foreach (var v in Model)
+        {
+            <tr>
+                <td>
+                    @v.BikeInfoId
+                </td>
+                <td>
+                    @v.BikeName
+                </td>
+                <td>
+                    @Html.ActionLink("Delete", "Delete", "Bike", new { BikeInfoId = v.BikeInfoId }, null)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", "Bike", new { BikeInfoId = v.BikeInfoId }, null)
+                </td>
+
+            </tr>
+        }
+
+
+</table>
+
+<br />
+<br />
+<br />
+<div class="btn btn-success">
+     @Html.ActionLink("Create", "Create", "Bike")
+</div>
